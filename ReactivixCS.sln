@@ -5,6 +5,15 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivix", "Reactivix\Reactivix.csproj", "{F2F01C5C-B437-40DF-8A8B-A4E708A04FF9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reactivix.Examples", "Reactivix.Examples", "{B48394BF-465C-4078-99C6-999CD8E24B8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivix.Examples.Console", "Reactivix.Examples\Reactivix.Examples.Console\Reactivix.Examples.Console.csproj", "{1EAC3427-65F1-4AAC-9F57-6DEED75D1D20}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F2F01C5C-B437-40DF-8A8B-A4E708A04FF9} = {F2F01C5C-B437-40DF-8A8B-A4E708A04FF9}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivix.Examples.WinForms", "Reactivix.Examples\Reactivix.Examples.WinForms\Reactivix.Examples.WinForms.csproj", "{4C619DD2-F35C-4AAD-A559-C345E4B83C9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +24,21 @@ Global
 		{F2F01C5C-B437-40DF-8A8B-A4E708A04FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2F01C5C-B437-40DF-8A8B-A4E708A04FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2F01C5C-B437-40DF-8A8B-A4E708A04FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EAC3427-65F1-4AAC-9F57-6DEED75D1D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EAC3427-65F1-4AAC-9F57-6DEED75D1D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EAC3427-65F1-4AAC-9F57-6DEED75D1D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EAC3427-65F1-4AAC-9F57-6DEED75D1D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C619DD2-F35C-4AAD-A559-C345E4B83C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C619DD2-F35C-4AAD-A559-C345E4B83C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C619DD2-F35C-4AAD-A559-C345E4B83C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C619DD2-F35C-4AAD-A559-C345E4B83C9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1EAC3427-65F1-4AAC-9F57-6DEED75D1D20} = {B48394BF-465C-4078-99C6-999CD8E24B8E}
+		{4C619DD2-F35C-4AAD-A559-C345E4B83C9A} = {B48394BF-465C-4078-99C6-999CD8E24B8E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A4DAF2A-2851-4692-9E49-95FEAA615728}
