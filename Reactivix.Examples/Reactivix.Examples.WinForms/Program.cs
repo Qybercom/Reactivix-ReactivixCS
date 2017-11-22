@@ -29,6 +29,8 @@ namespace Reactivix.Examples.WinForms
             Client.Response<MessageWelcome>("/", ResponseMessageWelcome);
             Client.Event<MessageWelcome>("/", EventMessageWelcome);
 
+            Client.Response<MessageWelcome>("/test", ResponseMessageWelcome);
+
             Client.Connect();
         }
 
@@ -118,9 +120,19 @@ namespace Reactivix.Examples.WinForms
             //ApplicationContext context = new ApplicationContext(new Form1());
             //context.
             //Application.Run();
-            Application.Idle += Application_Idle;
+            //Application.Idle += Application_Idle;
 
-            Application.Run(new Form1());
+            //Application.Run(new Form1());
+            Form1 main = new Form1();
+            main.Show();
+
+            var run = true;
+            while (run)
+            {
+                Application.DoEvents();
+                Thread.Pipe();
+                System.Threading.Thread.Sleep(10);
+            }
 
             //Application.RegisterMessageLoop()
         }

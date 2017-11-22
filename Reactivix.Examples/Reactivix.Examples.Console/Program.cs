@@ -31,16 +31,16 @@ namespace Reactivix.Examples.Console
             _client.Connect();
         }
 
+        public void ReactivixThreadPipe(ReactivixThread context)
+        {
+            _client.Pipe();
+        }
+
         private void _client_OnConnect(QuarkNetworkClient client)
         {
             Program.Thread.External(() => {
                 Program.Log("Program.Connect");
             });
-        }
-
-        public void ReactivixThreadPipe(ReactivixThread context)
-        {
-            _client.Pipe();
         }
 
         private void _client_OnClose(QuarkNetworkClient client)

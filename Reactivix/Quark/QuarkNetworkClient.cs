@@ -52,12 +52,20 @@ namespace Reactivix.Quark
 
         private void _socketOnData(ReactivixNetworkSocket client, string data)
         {
-            QuarkNetworkPacket packet = JsonConvert.DeserializeObject<QuarkNetworkPacket>(data);
+            if (data == "") return;
 
-            if (packet == null) return;
+            string[] separator = new string[] { "}{" };
+            List<string> queue = new List<string>(data.Replace("}{", "}}{{").Split(separator, StringSplitOptions.None));
 
-            if (packet.Response != "") _trigger(_responses, packet, packet.Response);
-            if (packet.Event != "") _trigger(_events, packet, packet.Event);
+            foreach (string raw in queue)
+            {
+                QuarkNetworkPacket packet = JsonConvert.DeserializeObject<QuarkNetworkPacket>(raw.Trim());
+
+                if (packet == null) continue;
+
+                if (packet.Response != "") _trigger(_responses, packet, packet.Response);
+                if (packet.Event != "") _trigger(_events, packet, packet.Event);
+            }
         }
 
         private void _socketOnClose(ReactivixNetworkSocket client)

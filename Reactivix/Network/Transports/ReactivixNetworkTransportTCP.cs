@@ -17,18 +17,21 @@ namespace Reactivix.Network.Transports
         public bool Connect(string host, int port)
         {
             _socket.Connect(host, port);
-            //Socket.ReceiveTimeout = 0;
-            //Socket.Client.Blocking = false;
+            _socket.ReceiveTimeout = 0;
+            _socket.Client.Blocking = false;
 
             return true;
         }
 
         public string Receive()
         {
-            if (_socket == null) return "";
+            if (_socket == null || _socket.Available == 0) return "";
 
             byte[] buffer = new byte[_socket.Available];
+
+            _socket.Client.Blocking = true;
             _socket.Client.Receive(buffer);
+            _socket.Client.Blocking = false;
 
             return buffer.Length == 0 ? "" : Encoding.UTF8.GetString(buffer);
         }
@@ -38,7 +41,10 @@ namespace Reactivix.Network.Transports
             if (_socket == null) return false;
 
             byte[] buffer = Encoding.UTF8.GetBytes(data);
+
+            _socket.Client.Blocking = true;
             _socket.Client.Send(buffer);
+            _socket.Client.Blocking = false;
 
             return true;
         }
