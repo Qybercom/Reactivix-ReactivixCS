@@ -1,4 +1,4 @@
 ﻿namespace Reactivix.Quark
 {
-    public delegate void QuarkNetworkCallback(QuarkNetworkPacket packet);
+    public delegate void QuarkNetworkCallback(QuarkNetworkClient client, QuarkNetworkPacket packet);
 }
