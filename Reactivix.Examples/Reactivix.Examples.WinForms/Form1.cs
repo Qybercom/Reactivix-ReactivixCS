@@ -1,5 +1,4 @@
-﻿using Reactivix.Thread;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Reactivix.Quark;
+using Reactivix.Thread;
 
 namespace Reactivix.Examples.WinForms
 {
@@ -23,9 +25,16 @@ namespace Reactivix.Examples.WinForms
             Program.Thread.Internal((IReactivixThread thread) => {
                 ClientThread client = thread as ClientThread;
 
-                Program.Log("Program.service");
-                client.Client.Service("/test");
+                Program.Log("Program.service.test");
+                client.Client.Service("/test", new TestServiceDTO() {
+                    message = textBox1.Text
+                });
             });
         }
+    }
+
+    class TestServiceDTO : IQuarkNetworkPacketData
+    {
+        public string message { get; set; }
     }
 }

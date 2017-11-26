@@ -29,7 +29,8 @@ namespace Reactivix.Examples.WinForms
             Client.Response<MessageWelcome>("/", ResponseMessageWelcome);
             Client.Event<MessageWelcome>("/", EventMessageWelcome);
 
-            Client.Response<MessageWelcome>("/test", ResponseMessageWelcome);
+            Client.Response<TestResponseDTO>("/test", TestResponseCallback);
+            Client.Event<TestEventDTO>("/test", TestEventCallback);
 
             Client.Connect();
         }
@@ -82,12 +83,43 @@ namespace Reactivix.Examples.WinForms
                 Program.Log("Program.event '" + data.message + "'");
             });
         }
+
+        public void TestResponseCallback(QuarkNetworkClient client, QuarkNetworkPacket packet)
+        {
+            Program.Thread.External((object context) => {
+                TestResponseDTO data = (TestResponseDTO)packet.Data;
+
+                Program.Log("Program.response.test '" + data.status + "'");
+            });
+        }
+
+        public void TestEventCallback(QuarkNetworkClient client, QuarkNetworkPacket packet)
+        {
+            Program.Thread.External((object context) => {
+                TestEventDTO data = (TestEventDTO)packet.Data;
+                Form1 form = context as Form1;
+
+                form.label1.Text = data.message;
+
+                Program.Log("Program.event.test '" + data.message + "'");
+            });
+        }
     }
 
     public class MessageWelcome : IQuarkNetworkPacketData
     {
         public int status { get; set; }
         public string message { get; set; }
+    }
+
+    public class TestResponseDTO : IQuarkNetworkPacketData
+    {
+        public int status { get; set; }
+    }
+
+    public class TestEventDTO : IQuarkNetworkPacketData
+    {
+        public string message{ get; set; }
     }
 
     static class Program
@@ -140,7 +172,7 @@ namespace Reactivix.Examples.WinForms
             while (run)
             {
                 Application.DoEvents();
-                Thread.Pipe();
+                Thread.Pipe(main);
                 System.Threading.Thread.Sleep(10);
             }
 

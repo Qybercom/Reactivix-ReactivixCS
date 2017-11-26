@@ -35,12 +35,13 @@ namespace Reactivix.Network
         {
             try
             {
-                if (Transport.Connected)
+                if (Transport.Connected && OnData != null)
                     OnData(this, Transport.Receive());
             }
             catch (Exception e)
             {
-                OnError(this, e);
+                if (OnError != null)
+                    OnError(this, e);
             }
         }
 
@@ -50,7 +51,7 @@ namespace Reactivix.Network
             {
                 bool connect = Transport.Connect(Host, Port);
 
-                if (connect)
+                if (connect && OnConnect != null)
                     OnConnect(this);
 
                 return connect;
@@ -70,7 +71,9 @@ namespace Reactivix.Network
             }
             catch (Exception e)
             {
-                OnError(this, e);
+                if (OnError != null)
+                    OnError(this, e);
+
                 return false;
             }
         }
@@ -81,14 +84,16 @@ namespace Reactivix.Network
             {
                 bool close = Transport.Connect(Host, Port);
 
-                if (close)
+                if (close && OnClose != null)
                     OnClose(this);
 
                 return close;
             }
             catch (Exception e)
             {
-                OnError(this, e);
+                if (OnError != null)
+                    OnError(this, e);
+
                 return false;
             }
         }
