@@ -65,19 +65,19 @@ namespace Reactivix.Examples.WinForms
             });
         }
 
-        public void ResponseMessageWelcome(QuarkNetworkPacket e)
+        public void ResponseMessageWelcome(QuarkNetworkClient client, QuarkNetworkPacket packet)
         {
             Program.Thread.External((object context) => {
-                MessageWelcome data = (MessageWelcome)e.Data;
+                MessageWelcome data = (MessageWelcome)packet.Data;
 
                 Program.Log("Program.response '" + data.message + "'");
             });
         }
 
-        public void EventMessageWelcome(QuarkNetworkPacket e)
+        public void EventMessageWelcome(QuarkNetworkClient client, QuarkNetworkPacket packet)
         {
             Program.Thread.External((object context) => {
-                MessageWelcome data = (MessageWelcome)e.Data;
+                MessageWelcome data = (MessageWelcome)packet.Data;
 
                 Program.Log("Program.event '" + data.message + "'");
             });
@@ -97,6 +97,11 @@ namespace Reactivix.Examples.WinForms
         public static void Log(string message, string lvl = "info")
         {
             Debug.WriteLine("[" + lvl + "] [" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] [thread: " + System.Threading.Thread.CurrentThread.ManagedThreadId + "] " + message);
+        }
+
+        public static void TestAttr()
+        {
+            System.Diagnostics.Debug.WriteLine("Hook");
         }
 
         /// <summary>

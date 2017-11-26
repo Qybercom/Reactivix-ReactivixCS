@@ -62,19 +62,19 @@ namespace Reactivix.Examples.Console
             });
         }
 
-        public void ResponseMessageWelcome(QuarkNetworkPacket e)
+        public void ResponseMessageWelcome(QuarkNetworkClient client, QuarkNetworkPacket packet)
         {
             Program.Thread.External((object context) => {
-                MessageWelcome data = (MessageWelcome)e.Data;
+                MessageWelcome data = (MessageWelcome)packet.Data;
 
                 Program.Log("Program.response '" + data.message + "'");
             });
         }
 
-        public void EventMessageWelcome(QuarkNetworkPacket e)
+        public void EventMessageWelcome(QuarkNetworkClient client, QuarkNetworkPacket packet)
         {
             Program.Thread.External((object context) => {
-                MessageWelcome data = (MessageWelcome)e.Data;
+                MessageWelcome data = (MessageWelcome)packet.Data;
 
                 Program.Log("Program.event '" + data.message + "'");
             });

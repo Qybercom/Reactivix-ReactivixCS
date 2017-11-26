@@ -8,6 +8,6 @@ namespace Reactivix.Quark.Stream
     public interface IQuarkNetworkStreamResponse : IQuarkNetworkStreamGeneric
     {
         IQuarkNetworkPacketData StreamResponseDTO { get; }
-        void StreamResponse(QuarkNetworkPacket packet);
+        void StreamResponse(QuarkNetworkClient client, QuarkNetworkPacket packet);
     }
 }

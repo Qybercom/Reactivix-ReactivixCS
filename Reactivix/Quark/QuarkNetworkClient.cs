@@ -113,7 +113,7 @@ namespace Reactivix.Quark
 
                 packet.TypeData = callback.TypeData;
 
-                callback.Worker(packet);
+                callback.Worker(this, packet);
             }
         }
 
