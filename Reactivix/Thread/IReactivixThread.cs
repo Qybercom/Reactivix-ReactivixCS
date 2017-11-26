@@ -4,5 +4,6 @@
     {
         void ReactivixThreadStart(ReactivixThread context);
         void ReactivixThreadPipe(ReactivixThread context);
+        void ReactivixThreadStop(ReactivixThread context);
     }
 }

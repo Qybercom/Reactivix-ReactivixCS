@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 using Reactivix.Network;
+using Reactivix.Quark.Stream;
 
 namespace Reactivix.Quark
 {
@@ -94,11 +95,8 @@ namespace Reactivix.Quark
             return Socket.Close();
         }
 
-        private void _subscribe<TData>(List<Callback> callbacks, string url, QuarkNetworkCallback callback)
-            where TData : IQuarkNetworkPacketData, new()
+        private void _subscribe(IQuarkNetworkPacketData data, List<Callback> callbacks, string url, QuarkNetworkCallback callback)
         {
-            TData data = new TData();
-
             callbacks.Add(new Callback
             {
                 URL = url,
@@ -131,13 +129,40 @@ namespace Reactivix.Quark
         public void Response<TData>(string url, QuarkNetworkCallback callback)
             where TData : IQuarkNetworkPacketData, new()
         {
-            _subscribe<TData>(_responses, url, callback);
+            _subscribe(new TData(), _responses, url, callback);
+        }
+
+        public void Response(IQuarkNetworkPacketData data, string url, QuarkNetworkCallback callback)
+        {
+            _subscribe(data, _responses, url, callback);
         }
 
         public void Event<TData>(string url, QuarkNetworkCallback callback)
             where TData : IQuarkNetworkPacketData, new()
         {
-            _subscribe<TData>(_events, url, callback);
+            _subscribe(new TData(), _events, url, callback);
+        }
+
+        public void Event(IQuarkNetworkPacketData data, string url, QuarkNetworkCallback callback)
+        {
+            _subscribe(data, _events, url, callback);
+        }
+
+
+
+        public void Stream(IQuarkNetworkStreamGeneric stream)
+        {
+            if (stream is IQuarkNetworkStreamResponse)
+            {
+                IQuarkNetworkStreamResponse _stream = stream as IQuarkNetworkStreamResponse;
+                Response(_stream.StreamResponseDTO, stream.URL, _stream.StreamResponse);
+            }
+
+            if (stream is IQuarkNetworkStreamEvent)
+            {
+                IQuarkNetworkStreamEvent _stream = stream as IQuarkNetworkStreamEvent;
+                Event(_stream.StreamEventDTO, stream.URL, _stream.StreamEvent);
+            }
         }
     }
 }

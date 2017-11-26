@@ -21,7 +21,8 @@ namespace Reactivix.Thread
         private SystemThread _thread { get; set; }
 
         private List<Action<IReactivixThread>> _tasksInternal { get; set; }
-        private List<Action> _tasksExternal { get; set; }
+        private List<Action<object>> _tasksExternal { get; set; }
+        private Action<IReactivixThread> _stop { get; set; }
 
         public ReactivixThread(IReactivixThread context)
         {
@@ -29,26 +30,29 @@ namespace Reactivix.Thread
             _thread = new SystemThread(_process);
 
             _tasksInternal = new List<Action<IReactivixThread>>();
-            _tasksExternal = new List<Action>();
+            _tasksExternal = new List<Action<object>>();
         }
 
-        public void Pipe()
+        public void Pipe(object context = null)
         {
             while (_tasksExternal.Count > 0)
             {
-                _tasksExternal[0]();
+                _tasksExternal[0](context);
                 _tasksExternal.RemoveAt(0);
             }
         }
 
         private void _process(object sender)
         {
-            Action<IReactivixThread> start = sender as Action<IReactivixThread>;
-            start(_context);
+            if (sender != null)
+            {
+                Action<IReactivixThread> start = sender as Action<IReactivixThread>;
+                start(_context);
+            }
 
             _context.ReactivixThreadStart(this);
 
-            bool run = true;
+            var run = true;
 
             while (run)
             {
@@ -60,18 +64,22 @@ namespace Reactivix.Thread
 
                 _context.ReactivixThreadPipe(this);
 
+                _stop?.Invoke(_context);
+
                 SystemThread.Sleep(Tick);
             }
         }
 
-        public void Start(Action<IReactivixThread> start)
+        public void Start(Action<IReactivixThread> start = null)
         {
             _thread.Start(start);
         }
 
-        public void Stop()
+        public void Stop(Action<IReactivixThread> stop = null, bool forced = false)
         {
-            _thread.Abort();
+            _stop = stop;
+
+            if (forced) _thread.Abort();
         }
 
         public void Internal(Action<IReactivixThread> task)
@@ -79,7 +87,7 @@ namespace Reactivix.Thread
             _tasksInternal.Add(task);
         }
 
-        public void External(Action task)
+        public void External(Action<object> task)
         {
             _tasksExternal.Add(task);
         }

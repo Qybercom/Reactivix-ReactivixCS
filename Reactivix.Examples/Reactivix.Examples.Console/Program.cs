@@ -36,30 +36,35 @@ namespace Reactivix.Examples.Console
             _client.Pipe();
         }
 
+        public void ReactivixThreadStop(ReactivixThread context)
+        {
+            //throw new NotImplementedException();
+        }
+
         private void _client_OnConnect(QuarkNetworkClient client)
         {
-            Program.Thread.External(() => {
+            Program.Thread.External((object context) => {
                 Program.Log("Program.Connect");
             });
         }
 
         private void _client_OnClose(QuarkNetworkClient client)
         {
-            Program.Thread.External(() => {
+            Program.Thread.External((object context) => {
                 Program.Log("Program.Close");
             });
         }
 
         private void _client_OnError(QuarkNetworkClient client, Exception e)
         {
-            Program.Thread.External(() => {
+            Program.Thread.External((object context) => {
                 Program.Log("Program.Error: " + e.Message);
             });
         }
 
         public void ResponseMessageWelcome(QuarkNetworkPacket e)
         {
-            Program.Thread.External(() => {
+            Program.Thread.External((object context) => {
                 MessageWelcome data = (MessageWelcome)e.Data;
 
                 Program.Log("Program.response '" + data.message + "'");
@@ -68,7 +73,7 @@ namespace Reactivix.Examples.Console
 
         public void EventMessageWelcome(QuarkNetworkPacket e)
         {
-            Program.Thread.External(() => {
+            Program.Thread.External((object context) => {
                 MessageWelcome data = (MessageWelcome)e.Data;
 
                 Program.Log("Program.event '" + data.message + "'");
