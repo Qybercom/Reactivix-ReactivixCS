@@ -22,7 +22,9 @@ namespace Reactivix.Thread
 
         private List<Action<IReactivixThread>> _tasksInternal { get; set; }
         private List<Action<object>> _tasksExternal { get; set; }
-        private Action<IReactivixThread> _stop { get; set; }
+
+        private Action<IReactivixThread> _stopCallback { get; set; }
+        private bool _stopSignal { get; set; }
 
         public ReactivixThread(IReactivixThread context)
         {
@@ -31,6 +33,8 @@ namespace Reactivix.Thread
 
             _tasksInternal = new List<Action<IReactivixThread>>();
             _tasksExternal = new List<Action<object>>();
+
+            _stopSignal = false;
         }
 
         public void Pipe(object context = null)
@@ -64,7 +68,13 @@ namespace Reactivix.Thread
 
                 _context.ReactivixThreadPipe(this);
 
-                _stop?.Invoke(_context);
+                if (_stopSignal)
+                {
+                    run = false;
+
+                    if (_stopCallback != null)
+                        _stopCallback.Invoke(_context);
+                }
 
                 SystemThread.Sleep(Tick);
             }
@@ -72,12 +82,14 @@ namespace Reactivix.Thread
 
         public void Start(Action<IReactivixThread> start = null)
         {
+            _stopSignal = false;
             _thread.Start(start);
         }
 
         public void Stop(Action<IReactivixThread> stop = null, bool forced = false)
         {
-            _stop = stop;
+            _stopSignal = true;
+            _stopCallback = stop;
 
             if (forced) _thread.Abort();
         }

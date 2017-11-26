@@ -31,6 +31,17 @@ namespace Reactivix.Examples.WinForms
                 });
             });
         }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.Thread.Stop((IReactivixThread thread) => {
+                ClientThread client = thread as ClientThread;
+
+                Program.Log("Program.close");
+
+                client.Client.Close();
+            });
+        }
     }
 
     class TestServiceDTO : IQuarkNetworkPacketData
