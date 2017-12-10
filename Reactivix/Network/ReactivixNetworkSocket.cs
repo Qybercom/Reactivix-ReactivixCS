@@ -82,7 +82,7 @@ namespace Reactivix.Network
         {
             try
             {
-                bool close = Transport.Connect(Host, Port);
+                bool close = Transport.Close();
 
                 if (close && OnClose != null)
                     OnClose(this);

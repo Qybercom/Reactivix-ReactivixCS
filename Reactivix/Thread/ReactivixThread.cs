@@ -74,6 +74,8 @@ namespace Reactivix.Thread
 
                     if (_stopCallback != null)
                         _stopCallback.Invoke(_context);
+
+                    _context.ReactivixThreadStop(this);
                 }
 
                 SystemThread.Sleep(Tick);

@@ -55,7 +55,7 @@
     <Compile Include="Quark\Stream\IQuarkNetworkStream.cs" />
     <Compile Include="Quark\Stream\IQuarkNetworkStreamEvent.cs" />
     <Compile Include="Quark\Stream\IQuarkNetworkStreamGeneric.cs" />
-    <Compile Include="Quark\Stream\IQuarkNetworkStreamWithResponse.cs" />
+    <Compile Include="Quark\Stream\IQuarkNetworkStreamResponse.cs" />
     <Compile Include="Thread\IReactivixThread.cs" />
     <Compile Include="Thread\ReactivixThread.cs" />
   </ItemGroup>

@@ -23,19 +23,6 @@ namespace Reactivix.Network.Transports
             return true;
         }
 
-        public string Receive()
-        {
-            if (_socket == null || _socket.Available == 0) return "";
-
-            byte[] buffer = new byte[_socket.Available];
-
-            _socket.Client.Blocking = true;
-            _socket.Client.Receive(buffer);
-            _socket.Client.Blocking = false;
-
-            return buffer.Length == 0 ? "" : Encoding.UTF8.GetString(buffer);
-        }
-
         public bool Send(string data)
         {
             if (_socket == null) return false;
@@ -47,6 +34,19 @@ namespace Reactivix.Network.Transports
             _socket.Client.Blocking = false;
 
             return true;
+        }
+
+        public string Receive()
+        {
+            if (_socket == null || _socket.Available == 0) return "";
+
+            byte[] buffer = new byte[_socket.Available];
+
+            _socket.Client.Blocking = true;
+            _socket.Client.Receive(buffer);
+            _socket.Client.Blocking = false;
+
+            return buffer.Length == 0 ? "" : Encoding.UTF8.GetString(buffer);
         }
 
         public bool Close()
