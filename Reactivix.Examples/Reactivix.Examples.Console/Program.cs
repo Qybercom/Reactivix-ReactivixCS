@@ -84,7 +84,7 @@ namespace Reactivix.Examples.Console
         }
     }
 
-    class Program
+    public partial class Program
     {
         public static ReactivixThread Thread { get; set; }
 
@@ -93,7 +93,11 @@ namespace Reactivix.Examples.Console
             System.Console.WriteLine("[" + lvl + "] [" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] [thread: " + System.Threading.Thread.CurrentThread.ManagedThreadId + "] " + message);
         }
 
-        static void Main(string[] args)
+        /// <summary>
+        /// Define your own Main() in a partial class in ProgramLocal.cs
+        /// </summary>
+        /// <param name="args"></param>
+        static void MainFallback(string[] args)
         {
             Log("Init.Main");
 
