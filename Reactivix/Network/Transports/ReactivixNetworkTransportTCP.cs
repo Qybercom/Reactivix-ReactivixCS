@@ -5,17 +5,18 @@ namespace Reactivix.Network.Transports
 {
     public class ReactivixNetworkTransportTCP : IReactivixNetworkTransport
     {
-        public bool Connected { get { return _socket == null ? false : _socket.Client.Connected; } }
+        public bool Connected { get { return _socket == null || _socket.Client == null ? false : _socket.Client.Connected; } }
 
         private TcpClient _socket;
 
         public ReactivixNetworkTransportTCP()
         {
-            _socket = new TcpClient();
         }
 
         public bool Connect(string host, int port)
         {
+            _socket = new TcpClient();
+
             _socket.Connect(host, port);
             _socket.ReceiveTimeout = 0;
             _socket.Client.Blocking = false;
@@ -54,6 +55,7 @@ namespace Reactivix.Network.Transports
             if (_socket == null) return false;
 
             _socket.Close();
+            _socket = null;
 
             return true;
         }

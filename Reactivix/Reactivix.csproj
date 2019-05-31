@@ -44,11 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOProcessors\ReactivixFormIOProcessor.cs" />
+    <Compile Include="IOProcessors\ReactivixJSONIOProcessor.cs" />
+    <Compile Include="IOProcessors\ReactivixPlainIOProcessor.cs" />
+    <Compile Include="IReactivixIOProcessor.cs" />
     <Compile Include="Network\IReactivixNetworkTransport.cs" />
+    <Compile Include="Network\ReactivixHTTPClient.cs" />
+    <Compile Include="Network\ReactivixHTTPPacket.cs" />
     <Compile Include="Network\ReactivixNetworkSocket.cs" />
     <Compile Include="Network\Transports\ReactivixNetworkTransportTCP.cs" />
+    <Compile Include="OAuth\OAuthClient.cs" />
+    <Compile Include="OAuth\OAuthRequest.cs" />
+    <Compile Include="OAuth\OAuthResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quark\IQuarkNetworkPacketData.cs" />
+    <Compile Include="Quark\QuarkClient.cs" />
     <Compile Include="Quark\QuarkNetworkCallback.cs" />
     <Compile Include="Quark\QuarkNetworkClient.cs" />
     <Compile Include="Quark\QuarkNetworkPacket.cs" />
@@ -56,6 +66,7 @@
     <Compile Include="Quark\Stream\IQuarkNetworkStreamEvent.cs" />
     <Compile Include="Quark\Stream\IQuarkNetworkStreamGeneric.cs" />
     <Compile Include="Quark\Stream\IQuarkNetworkStreamResponse.cs" />
+    <Compile Include="ReactivixURI.cs" />
     <Compile Include="Thread\IReactivixThread.cs" />
     <Compile Include="Thread\ReactivixThread.cs" />
   </ItemGroup>

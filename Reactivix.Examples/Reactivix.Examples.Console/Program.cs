@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 using Reactivix.Thread;
 using Reactivix.Quark;
+using Reactivix.Network;
 using Reactivix.Network.Transports;
+using Reactivix.IOProcessors;
+using Reactivix.OAuth;
 
 namespace Reactivix.Examples.Console
 {
@@ -113,5 +116,17 @@ namespace Reactivix.Examples.Console
     {
         public int status { get; set; }
         public string message { get; set; }
+    }
+
+    public class ResponseAPIIndex : IQuarkNetworkPacketData
+    {
+        public int status { get; set; }
+        public ResponseAPIIndexApp app { get; set; }
+    }
+
+    public class ResponseAPIIndexApp
+    {
+        public string name { get; set; }
+        public string logo { get; set; }
     }
 }
